@@ -28,4 +28,4 @@ function Sort() {
     )
 }
 
-export default Sort
+export default Sort;
