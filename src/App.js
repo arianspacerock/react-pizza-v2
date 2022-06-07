@@ -8,6 +8,8 @@ import pizzas from "./assets/pizzas.json"
 
 
 function App() {
+    fetch('https://629f7aa2461f8173e4ea8987.mockapi.io/items')
+
     return (
         <div className="wrapper">
             <Header/>
