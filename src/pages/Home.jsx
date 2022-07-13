@@ -12,21 +12,22 @@ const Home = () => {
     const [sortType, setSortType] = React.useState(0)
 
     React.useEffect(() => {
-        fetch('https://629f7aa2461f8173e4ea8987.mockapi.io/items')
+        setIsLoading(true)
+        fetch('https://629f7aa2461f8173e4ea8987.mockapi.io/items?category=' + categoryId)
             .then((res) => res.json())
             .then((arr) => {
                 setItems(arr)
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [])
+    }, [categoryId, sortType])
 
 
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onClickCategory={(i) => setCategoryId(i)}/>
-                <Sort/>
+                <Categories value={categoryId} onChangeCategory={(i) => setCategoryId(i)}/>
+                <Sort value={sortType} onChangeSort={(i) => setSortType(i)}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
