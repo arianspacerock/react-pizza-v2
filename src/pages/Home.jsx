@@ -9,11 +9,15 @@ const Home = () => {
     const [items, setItems] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
     const [categoryId, setCategoryId] = React.useState(0)
-    const [sortType, setSortType] = React.useState(0)
+    const [sortType, setSortType] = React.useState({
+        name: 'популярности',
+        sortProperty: 'rating',
+    })
 
     React.useEffect(() => {
         setIsLoading(true)
-        fetch('https://629f7aa2461f8173e4ea8987.mockapi.io/items?category=' + categoryId)
+        fetch(`https://629f7aa2461f8173e4ea8987.mockapi.io/items?${categoryId > 0 ? `categoryId=${categoryId}` : ''}
+        `)
             .then((res) => res.json())
             .then((arr) => {
                 setItems(arr)
