@@ -17,12 +17,12 @@ const Home = () => {
     React.useEffect(() => {
         setIsLoading(true)
 
-        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
         const sortBy = sortType.sortProperty.replace('-', '')
-        const category = categoryId > 0 ? `category=${categoryId}` : ''`
+        const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
+        const category = categoryId > 0 ? `category=${categoryId}` : ''
 
         fetch(
-            `https://629f7aa2461f8173e4ea8987.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
+           `https://629f7aa2461f8173e4ea8987.mockapi.io/items?${category}&sortBy=${sortBy}&order=${order}`
         )
             .then((res) => res.json())
             .then((arr) => {
