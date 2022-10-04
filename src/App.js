@@ -9,14 +9,14 @@ import NotFound from "./components/NotFoundBlock";
 
 function App() {
 
-    const [searhValue, setSearchValue] = React.useState('')
+    const [searchValue, setSearchValue] = React.useState('')
 
     return (
         <div className="wrapper">
-            <Header searhValue={searhValue} setSearchValue={setSearchValue}/>
+            <Header searhValue={searchValue} setSearchValue={setSearchValue}/>
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<Home searchValue={searhValue}/>}/>
+                    <Route path="/" element={<Home searchValue={searchValue}/>}/>
                     <Route path="/cart" element={<Cart/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
