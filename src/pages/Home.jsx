@@ -11,6 +11,7 @@ const Home = ({searchValue}) => {
     const [items, setItems] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
     const [categoryId, setCategoryId] = React.useState(0)
+    const [currentPage, setCurrentPage] = React.useState(1)
     const [sortType, setSortType] = React.useState({
         name: 'популярности',
         sortProperty: 'rating',
@@ -33,7 +34,7 @@ const Home = ({searchValue}) => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
-    }, [categoryId, sortType, searchValue])
+    }, [categoryId, sortType, searchValue, currentPage])
 
     const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
 
@@ -48,7 +49,7 @@ const Home = ({searchValue}) => {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {isLoading ? skeletons : pizzas}
-                <Pagination />
+                <Pagination onChangePage={number => setCurrentPage(number)}/>
             </div>
 
         </div>
