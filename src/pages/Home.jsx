@@ -22,6 +22,10 @@ const Home = () => {
         sortProperty: 'rating',
     })
 
+    const onChangeCategory = (id) => {
+
+    }
+
     React.useEffect(() => {
         setIsLoading(true)
 
@@ -48,7 +52,7 @@ const Home = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onChangeCategory={(i) => setCategoryId(i)}/>
+                <Categories value={categoryId} onChangeCategory={onChangeCategory}/>
                 <Sort value={sortType} onChangeSort={(i) => setSortType(i)}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
