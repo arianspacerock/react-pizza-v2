@@ -1,6 +1,6 @@
 import React from "react";
 
-function Sort({value, onChangeSort}) {
+function Sort() {
     const [open, setOpen] = React.useState(false)
     const list = [
         {name: 'популярности (DESC)', sortProperty: 'rating'},
