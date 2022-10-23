@@ -1,6 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId } from "../redux/slices/filterSlice";
+import axios from "axios";
+import {useSelector, useDispatch} from "react-redux";
+import {setCategoryId} from "../redux/slices/filterSlice";
+
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
@@ -11,7 +13,7 @@ import {SearchContext} from "../App";
 
 const Home = () => {
     const dispatch = useDispatch()
-    const  { categoryId, sort } = useSelector(state => state.filter)
+    const {categoryId, sort} = useSelector(state => state.filter)
 
     const {searchValue} = React.useContext(SearchContext)
     const [items, setItems] = React.useState([])
@@ -30,12 +32,11 @@ const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : ''
         const search = searchValue ? `&search=${searchValue}` : ''
 
-        fetch(
-            `https://629f7aa2461f8173e4ea8987.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
+        axios
+            .get(`https://629f7aa2461f8173e4ea8987.mockapi.io/items?page=1&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
         )
-            .then((res) => res.json())
-            .then((arr) => {
-                setItems(arr)
+            .then((res) => {
+                setItems(res.data)
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
@@ -49,7 +50,7 @@ const Home = () => {
         <div className="container">
             <div className="content__top">
                 <Categories value={categoryId} onChangeCategory={onChangeCategory}/>
-                <Sort />
+                <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
