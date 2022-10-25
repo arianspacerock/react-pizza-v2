@@ -6,11 +6,12 @@ import {SearchContext} from '../../App'
 
 const Search = () => {
     const {value, setValue} = React.useState()
-    const {searchValue, setSearchValue} = React.useContext(SearchContext)
+    const {setSearchValue} = React.useContext(SearchContext)
     const inputRef = React.useRef()
 
     const onClickClear = () => {
         setSearchValue('')
+        setValue('')
         inputRef.current.focus()
     }
 
@@ -39,7 +40,7 @@ const Search = () => {
             <input
                 ref={inputRef}
                 value={value}
-                onChange={(event) => setSearchValue(event.target.value)}
+                onChange={onChangeInput}
                 className={styles.input}
                 placeholder="Поиск пиццы ... "
             />
