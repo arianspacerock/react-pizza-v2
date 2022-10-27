@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import qs from "qs"
 import {useSelector, useDispatch} from "react-redux";
 import {setCategoryId, setCurrentPage} from "../redux/slices/filterSlice";
 
@@ -44,6 +45,12 @@ const Home = () => {
                 setIsLoading(false)
             })
         window.scrollTo(0, 0)
+    }, [categoryId, sort.sortProperty, searchValue, currentPage])
+
+    React.useEffect(() => {
+        const queryString = qs.stringify({
+
+        })
     }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
     const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
