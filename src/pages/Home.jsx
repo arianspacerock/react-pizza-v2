@@ -2,10 +2,11 @@ import React from "react";
 import axios from "axios";
 import qs from "qs"
 import {useSelector, useDispatch} from "react-redux";
-import {setCategoryId, setCurrentPage} from "../redux/slices/filterSlice";
+import { useNavigate } from "react-router-dom";
+import {setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
 
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Sort, {sortlist} from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
@@ -13,6 +14,7 @@ import {SearchContext} from "../App";
 
 
 const Home = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const {categoryId, sort, currentPage} = useSelector(state => state.filter)
 
@@ -28,6 +30,21 @@ const Home = () => {
     const onChangePage = number => {
         dispatch(setCurrentPage(number))
     }
+
+    React.useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1))
+
+            const sort = sortlist.find(obj => obj.sortProperty === params.sortProperty)
+
+            dispatch(
+                setFilters({
+                    ...params,
+                    sort
+                })
+            )
+        }
+    }, [])
 
     React.useEffect(() => {
         setIsLoading(true)
@@ -49,8 +66,12 @@ const Home = () => {
 
     React.useEffect(() => {
         const queryString = qs.stringify({
-
+            sortProperty: sort.Property,
+            categoryId,
+            currentPage,
         })
+
+        navigate(`?${queryString}`)
     }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
     const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
