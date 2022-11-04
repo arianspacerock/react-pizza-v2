@@ -1,25 +1,32 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    categoryId: 0
+    totalPrice: 0,
+    items: [],
 }
 
-const filterSlice = createSlice({
-    name: 'filters',
+const cartSlice = createSlice({
+    name: 'cart',
     initialState,
     reducers: {
-        setCategoryId(state, action) {
-            state.categoryId = action.payload
-        }
+        addProduct(state, action) {
+            state.items.push(action.payload)
+        },
+        removeItem(state, action) {
+            state.items = state.items.filter(obj => obj.id === action.payload)
+        },
+        clearItems(state) {
+            state.items = []
+        },
     }
 })
 
 
 
 
-export const { setCategoryId, setSort, setCurrentPage, setFilters } = filterSlice.actions
+export const {addProduct, removeItem, clearItems} = cartSlice.actions
 
-export default filterSlice.reducer
+export default cartSlice.reducer
 
 
 
