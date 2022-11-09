@@ -34,7 +34,7 @@ const Home = () => {
         dispatch(setCurrentPage(number))
     }
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async () => {
         setIsLoading(true)
 
         const sortBy = sort.sortProperty.replace('-', '')
@@ -42,7 +42,7 @@ const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : ''
         const search = searchValue ? `&search=${searchValue}` : ''
 
-        axios
+        await axios
             .get(`https://629f7aa2461f8173e4ea8987.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`)
             .then((res) => {
                 setItems(res.data)
@@ -94,17 +94,17 @@ const Home = () => {
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
     return (<div className="container">
-            <div className="content__top">
-                <Categories value={categoryId} onChangeCategory={onChangeCategory}/>
-                <Sort/>
-            </div>
-            <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {isLoading ? skeletons : pizzas}
-                <Pagination currentPage={currentPage} onChangePage={onChangePage}/>
-            </div>
+        <div className="content__top">
+            <Categories value={categoryId} onChangeCategory={onChangeCategory}/>
+            <Sort/>
+        </div>
+        <h2 className="content__title">Все пиццы</h2>
+        <div className="content__items">
+            {isLoading ? skeletons : pizzas}
+            <Pagination currentPage={currentPage} onChangePage={onChangePage}/>
+        </div>
 
-        </div>)
+    </div>)
 }
 
 export default Home
