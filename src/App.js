@@ -8,13 +8,7 @@ import Cart from "./pages/Cart";
 import NotFound from "./components/NotFoundBlock";
 
 
-export const SearchContext = React.createContext()
-
-
 function App() {
-
-    const [searchValue, setSearchValue] = React.useState('')
-
     return (
         <div>
             <SearchContext.Provider value={{searchValue, setSearchValue}}>
