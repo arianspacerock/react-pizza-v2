@@ -18,6 +18,10 @@ const FullPizza = () => {
         fetchPizza()
     }, [])
 
+    if (!pizza) {
+        return 'Загрузка...'
+    }
+
     return (
         <div className="container">
             <img src={pizza.imageUrl}/>
