@@ -1,6 +1,6 @@
 import React from "react";
-import {useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useParams, useNavigate} from "react-router-dom";
 
 const FullPizza: React.FC = () => {
     const [pizza, setPizza] = React.useState<{
@@ -8,6 +8,7 @@ const FullPizza: React.FC = () => {
         title: string
         price: number
     }>()
+
     const { id } = useParams()
     const navigate = useNavigate()
 
