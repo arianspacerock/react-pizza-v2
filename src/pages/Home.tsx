@@ -12,7 +12,7 @@ import Pagination from "../components/Pagination";
 import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzaSlice";
 
 
-const Home = () => {
+const Home: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isSearch = React.useRef(false)
@@ -20,12 +20,12 @@ const Home = () => {
     const {items, status} = useSelector(selectPizzaData)
     const {categoryId, sort, currentPage, searchValue} = useSelector(selectFilter)
 
-    const onChangeCategory = (id) => {
-        dispatch(setCategoryId(id))
+    const onChangeCategory = (idx: number) => {
+        dispatch(setCategoryId(idx))
     }
 
-    const onChangePage = number => {
-        dispatch(setCurrentPage(number))
+    const onChangePage = (value: number) => {
+        dispatch(setCurrentPage(value))
     }
 
     const getPizzas = async () => {
@@ -35,6 +35,7 @@ const Home = () => {
         const search = searchValue ? `&search=${searchValue}` : ''
 
         dispatch(
+            //@ts-ignore
             fetchPizzas({
                 sortBy,
                 order,
@@ -85,7 +86,7 @@ const Home = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
 
-    const pizzas = items.map((obj) =>
+    const pizzas = items.map((obj: any) =>
         <Link key={obj.id} to={`/pizza/${obj.id}`}>
             <PizzaBlock  {...obj} />
         </Link>)
@@ -101,7 +102,7 @@ const Home = () => {
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ? (
                 <div className="content__error-info">
-                    <h2>Произошла ошибка <icon>😕</icon></h2>
+                    <h2>Произошла ошибка <span>😕</span></h2>
                     <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
                 </div>
             ) : (
