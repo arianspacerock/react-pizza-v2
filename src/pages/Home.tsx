@@ -24,8 +24,8 @@ const Home: React.FC = () => {
         dispatch(setCategoryId(idx))
     }
 
-    const onChangePage = (value: number) => {
-        dispatch(setCurrentPage(value))
+    const onChangePage = (page: number) => {
+        dispatch(setCurrentPage(page))
     }
 
     const getPizzas = async () => {
@@ -96,7 +96,10 @@ const Home: React.FC = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onChangeCategory={onChangeCategory}/>
+                <Categories
+                    value={categoryId}
+                    onChangeCategory={onChangeCategory}
+                />
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
