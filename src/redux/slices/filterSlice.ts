@@ -1,5 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
+import sort from "../../components/Sort";
 
 type Sort = {
     name: string;
@@ -27,21 +28,21 @@ const filterSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
-        setCategoryId(state, action) {
+        setCategoryId(state, action: PayloadAction<number>) {
             state.categoryId = action.payload
         },
-        setSearchValue(state, action) {
+        setSearchValue(state, action: PayloadAction<string>) {
             state.searchValue = action.payload
         },
-        setSort(state, action) {
+        setSort(state, action: PayloadAction<Sort>) {
             state.sort = action.payload
         },
-        setCurrentPage(state, action) {
-            state.currentPage = action.payload
+        setCurrentPage(state, action: PayloadAction<number>) {
+            state.pageCount = action.payload
         },
-        setFilters(state, action) {
+        setFilters(state, action: PayloadAction<FilterSliceState>) {
             state.sort = action.payload.sort
-            state.currentPage = Number(action.payload.currentPage)
+            state.pageCount = Number(action.payload.pageCount)
             state.categoryId = Number(action.payload.categoryId)
         }
     }
