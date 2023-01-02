@@ -28,7 +28,15 @@ const initialState: PizzaSliceState = {
     status: Status.LOADING, // loading | success | error
 }
 
-export const fetchPizzas = createAsyncThunk< Pizza[], Record<string, string> >('pizza/fetchPizzasStatus', async (params) => {
+export type SearchPizzaParams = {
+    sortBy: string;
+    order: string;
+    category: string;
+    search: string;
+    currentPage: string;
+}
+
+export const fetchPizzas = createAsyncThunk< Pizza[], SearchPizzaParams >('pizza/fetchPizzasStatus', async (params) => {
         const {sortBy, order, category, search, currentPage} = params
         const {data} = await axios.get<Pizza[]>(
             `https://629f7aa2461f8173e4ea8987.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
