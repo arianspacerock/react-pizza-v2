@@ -1,7 +1,7 @@
 import React from "react";
 import qs from "qs"
 import {useSelector, } from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import Categories from "../components/Categories";
 import Sort, {sortlist} from "../components/Sort";
@@ -9,7 +9,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import  {selectFilter, setCategoryId, setCurrentPage, setFilters} from "../redux/slices/filterSlice";
-import {fetchPizzas, selectPizzaData} from "../redux/slices/pizzaSlice";
+import {fetchPizzas, SearchPizzaParams, selectPizzaData} from "../redux/slices/pizzaSlice";
 import {useAppDispatch} from "../redux/store";
 
 
@@ -65,12 +65,15 @@ const Home: React.FC = () => {
 // Если был первый рендер, то проверяем URL-параметры и сохраняем в редуксе
     React.useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1))
+            const params = (qs.parse(window.location.search.substring(1)) as unknown) as SearchPizzaParams
 
-            const sort = sortlist.find(obj => obj.sortProperty === params.sortProperty)
+            const sort = sortlist.find(obj => obj.sortProperty === params.sortBy)
 
             dispatch(setFilters({
-                ...params, sort
+                searchValue: params.search,
+                categoryId: Number(params.category),
+                pageCount: Number(params.currentPage),
+                sort: sort || sortlist[0],
             }))
             isSearch.current = true
         }
@@ -88,10 +91,7 @@ const Home: React.FC = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
 
-    const pizzas = items.map((obj: any) =>
-        <Link key={obj.id} to={`/pizza/${obj.id}`}>
-            <PizzaBlock  {...obj} />
-        </Link>)
+    const pizzas = items.map((obj: any) => <PizzaBlock  {...obj} />
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
