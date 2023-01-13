@@ -91,7 +91,7 @@ const Home: React.FC = () => {
     }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
 
-    const pizzas = items.map((obj: any) => <PizzaBlock  {...obj} />
+    const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id}  {...obj} />)
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
 
