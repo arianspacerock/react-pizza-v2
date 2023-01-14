@@ -23,9 +23,9 @@ const Home: React.FC = () => {
 
     const isSearch = React.useRef(false)
 
-    const onChangeCategory = (idx: number) => {
+    const onChangeCategory = React.useCallback((idx: number) => {
         dispatch(setCategoryId(idx))
-    }
+    }, [])
 
     const onChangePage = (page: number) => {
         dispatch(setCurrentPage(page))
