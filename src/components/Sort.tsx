@@ -1,6 +1,6 @@
 import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {selectSort, setSort, SortPropertyEnum} from "../redux/slices/filterSlice";
+import {useDispatch} from "react-redux";
+import {setSort, SortPropertyEnum} from "../redux/slices/filterSlice";
 
 type SortItem = {
     name: string;
@@ -11,25 +11,29 @@ type PopupClick = MouseEvent & {
     path: Node[]
 }
 
+type SortPopupProps = {
+    value: SortItem
+}
+
 export const sortlist: SortItem[] = [
     {name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC},
     {name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC},
     {name: 'цене (DESC)', sortProperty: SortPropertyEnum.PRICE_DESC},
     {name: 'цене (ASC)', sortProperty: SortPropertyEnum.PRICE_ASC},
     {name: 'алфавиту (DESC)', sortProperty: SortPropertyEnum.TITLE_DESC},
-    {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC}
+    {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC},
 ]
 
-function SortPopup() {
+const SortPopup: React.FC <SortPopupProps> = ({ value }) => {
     const dispatch = useDispatch()
-    const sort = useSelector(selectSort)
     const sortRef = React.useRef<HTMLDivElement>(null)
     const [open, setOpen] = React.useState(false)
 
     const onClickListItem = (obj: SortItem) => {
         dispatch(setSort(obj))
         setOpen(false)
-    }
+}
+
 
     React.useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -62,14 +66,14 @@ function SortPopup() {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{sort.name}</span>
+                <span onClick={() => setOpen(!open)}>{value.name}</span>
             </div>
             {open && (
                 <div className="sort__popup">
                     <ul>
                         {sortlist.map((obj, i) => (
                             <li key={i} onClick={() => onClickListItem(obj)}
-                                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>{obj.name}</li>
+                                className={value.sortProperty === obj.sortProperty ? 'active' : ''}>{obj.name}</li>
                         ))}
                     </ul>
                 </div>
