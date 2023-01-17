@@ -24,7 +24,7 @@ export const sortlist: SortItem[] = [
     {name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITLE_ASC},
 ]
 
-const SortPopup: React.FC <SortPopupProps> = ({ value }) => {
+const SortPopup: React.FC <SortPopupProps> = React.memo(({ value }) => {
     const dispatch = useDispatch()
     const sortRef = React.useRef<HTMLDivElement>(null)
     const [open, setOpen] = React.useState(false)
@@ -32,7 +32,7 @@ const SortPopup: React.FC <SortPopupProps> = ({ value }) => {
     const onClickListItem = (obj: SortItem) => {
         dispatch(setSort(obj))
         setOpen(false)
-}
+    }
 
 
     React.useEffect(() => {
@@ -80,6 +80,6 @@ const SortPopup: React.FC <SortPopupProps> = ({ value }) => {
             )}
         </div>
     )
-}
+})
 
 export default SortPopup;
