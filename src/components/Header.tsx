@@ -11,13 +11,16 @@ import React from "react";
 function Header() {
     const {items, totalPrice} = useSelector(selectCart)
     const location = useLocation()
-    const isMounted = React.useRef()
+    const isMounted = React.useRef(false)
 
     const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
 
     React.useEffect(() => {
-        const json = JSON.stringify(items)
-        localStorage.setItem('cart', json)
+        if (isMounted.current) {
+            const json = JSON.stringify(items)
+            localStorage.setItem('cart', json)
+        }
+        isMounted.current = true
     }, [items])
 
     return (
