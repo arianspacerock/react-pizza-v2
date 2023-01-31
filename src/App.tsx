@@ -1,11 +1,17 @@
+import React, {Suspense} from "react"
+import Loadable from 'react-loadable';
 import './App.css';
 import './scss/app.scss';
 import {Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
-import React, {Suspense} from "react"
 
-const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */ './pages/Cart'))
+// const Cart = React.lazy(() => import(/* webpackChunkName: "Cart" */ './pages/Cart'))
+const Cart = Loadable({
+    loader: () => import(/* webpackChunkName: "Cart" */ './pages/Cart'),
+    loading: () => <div>Идет загрузка корзины...</div>,
+})
+
 const FullPizza = React.lazy(() => import(/* webpackChunkName: "FullPizza" */ './pages/FullPizza'))
 const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound" */ './pages/NotFound'))
 
