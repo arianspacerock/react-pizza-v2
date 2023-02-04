@@ -1,4 +1,5 @@
 import React, {Suspense} from "react"
+// @ts-ignore
 import Loadable from 'react-loadable';
 import './App.css';
 import './scss/app.scss';
